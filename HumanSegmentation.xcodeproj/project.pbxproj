@@ -12,6 +12,7 @@
 		434DDF0B27F42CB700F443CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 434DDF0927F42CB700F443CB /* Main.storyboard */; };
 		434DDF0D27F42CBA00F443CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 434DDF0C27F42CBA00F443CB /* Assets.xcassets */; };
 		434DDF1027F42CBA00F443CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 434DDF0E27F42CBA00F443CB /* LaunchScreen.storyboard */; };
+		434DDF1827F433C900F443CB /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434DDF1727F433C900F443CB /* VideoCapture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		434DDF0C27F42CBA00F443CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		434DDF0F27F42CBA00F443CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		434DDF1127F42CBA00F443CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		434DDF1727F433C900F443CB /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				434DDF0327F42CB700F443CB /* AppDelegate.swift */,
 				434DDF0727F42CB700F443CB /* ViewController.swift */,
+				434DDF1727F433C900F443CB /* VideoCapture.swift */,
 				434DDF0927F42CB700F443CB /* Main.storyboard */,
 				434DDF0C27F42CBA00F443CB /* Assets.xcassets */,
 				434DDF0E27F42CBA00F443CB /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				434DDF0827F42CB700F443CB /* ViewController.swift in Sources */,
+				434DDF1827F433C900F443CB /* VideoCapture.swift in Sources */,
 				434DDF0427F42CB700F443CB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,7 @@
 				DEVELOPMENT_TEAM = F3U32U4DWY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HumanSegmentation/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use cameras for human segmentation.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -312,6 +317,7 @@
 				DEVELOPMENT_TEAM = F3U32U4DWY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HumanSegmentation/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use cameras for human segmentation.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
