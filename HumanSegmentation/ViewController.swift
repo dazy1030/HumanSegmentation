@@ -5,6 +5,7 @@
 //  Created by Naoki Odajima on 2022/03/30.
 //
 
+import CoreImage.CIFilterBuiltins
 import MetalKit
 import UIKit
 
@@ -17,8 +18,10 @@ final class ViewController: UIViewController {
     }
     private var commandQueue: MTLCommandQueue?
     private var ciContext: CIContext?
-    private var currentCIImage: CIImage?
+    private var originCaptureImage: CIImage?
+    private var maskImage: CIImage?
     private let videoCapture = VideoCapture()
+    private let humanSegmentation = HumanSegmentation()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -44,7 +47,15 @@ final class ViewController: UIViewController {
                 guard let imageBuffer = sampleBuffer.imageBuffer else {
                     return
                 }
-                self.currentCIImage = CIImage(cvImageBuffer: imageBuffer)
+                self.originCaptureImage = CIImage(cvImageBuffer: imageBuffer)
+                do {
+                    guard let maskImageBuffer = try self.humanSegmentation.makeMaskPixelBuffer(of: imageBuffer) else {
+                        return
+                    }
+                    self.maskImage = CIImage(cvImageBuffer: maskImageBuffer)
+                } catch {
+                    NSLog(error.localizedDescription)
+                }
                 self.mtkView.draw()
             }
         }
@@ -56,6 +67,24 @@ final class ViewController: UIViewController {
         alertController.addAction(alertAction)
         self.present(alertController, animated: true)
     }
+    
+    private func mask(to originImage: CIImage, with maskImage: CIImage) -> CIImage? {
+        let fixedMaskImage: CIImage
+        if originImage.extent.size != maskImage.extent.size {
+            let fixTransform = CGAffineTransform(
+                scaleX: originImage.extent.width / maskImage.extent.width,
+                y: originImage.extent.height / maskImage.extent.height
+            )
+            fixedMaskImage = maskImage.transformed(by: fixTransform)
+        } else {
+            fixedMaskImage = maskImage
+        }
+        let filter = CIFilter.blendWithMask()
+        filter.backgroundImage = fixedMaskImage
+        filter.inputImage = originImage
+        filter.maskImage = fixedMaskImage
+        return filter.outputImage
+    }
 }
 
 // MARK: - MTKViewDelegate
@@ -64,17 +93,20 @@ extension ViewController: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
     
     func draw(in view: MTKView) {
-        guard let ciImage = self.currentCIImage,
+        guard var renderImage = self.originCaptureImage,
               let ciContext = self.ciContext,
               let commandBuffer = self.commandQueue?.makeCommandBuffer(),
               let currentDrawable = view.currentDrawable else {
             return
         }
+        if let maskImage = self.maskImage, let maskedImage = self.mask(to: renderImage, with: maskImage) {
+            renderImage = maskedImage
+        }
         let fitTransform = CGAffineTransform(
-            scaleX: view.drawableSize.width / ciImage.extent.width,
-            y: view.drawableSize.height / ciImage.extent.height
+            scaleX: view.drawableSize.width / renderImage.extent.width,
+            y: view.drawableSize.height / renderImage.extent.height
         )
-        let newImage = ciImage.transformed(by: fitTransform)
+        let newImage = renderImage.transformed(by: fitTransform)
         ciContext.render(
             newImage,
             to: currentDrawable.texture,
