@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		433EA61E27F5A65700D45C92 /* HumanSegmentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */; };
 		434DDF0427F42CB700F443CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434DDF0327F42CB700F443CB /* AppDelegate.swift */; };
 		434DDF0827F42CB700F443CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434DDF0727F42CB700F443CB /* ViewController.swift */; };
 		434DDF0B27F42CB700F443CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 434DDF0927F42CB700F443CB /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanSegmentation.swift; sourceTree = "<group>"; };
 		434DDF0027F42CB700F443CB /* HumanSegmentation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HumanSegmentation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		434DDF0327F42CB700F443CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		434DDF0727F42CB700F443CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				434DDF0327F42CB700F443CB /* AppDelegate.swift */,
 				434DDF0727F42CB700F443CB /* ViewController.swift */,
 				434DDF1727F433C900F443CB /* VideoCapture.swift */,
+				433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */,
 				434DDF0927F42CB700F443CB /* Main.storyboard */,
 				434DDF0C27F42CBA00F443CB /* Assets.xcassets */,
 				434DDF0E27F42CBA00F443CB /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				434DDF0827F42CB700F443CB /* ViewController.swift in Sources */,
+				433EA61E27F5A65700D45C92 /* HumanSegmentation.swift in Sources */,
 				434DDF1827F433C900F443CB /* VideoCapture.swift in Sources */,
 				434DDF0427F42CB700F443CB /* AppDelegate.swift in Sources */,
 			);
