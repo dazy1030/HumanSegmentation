@@ -6,19 +6,15 @@
 //
 
 import CoreImage.CIFilterBuiltins
-import MetalKit
 import UIKit
 
 @MainActor
 final class ViewController: UIViewController {
-    @IBOutlet private weak var mtkView: MTKView! {
+    @IBOutlet private weak var mtlImageView: MetalCIImageView! {
         didSet {
-            self.setupMetal()
+            self.mtlImageView.setup()
         }
     }
-    private var commandQueue: MTLCommandQueue?
-    private var ciContext: CIContext?
-    private var renderImage: CIImage?
     private let captureSession = CaptureSession()
     private let humanSegmentation = HumanSegmentation()
     
@@ -26,21 +22,13 @@ final class ViewController: UIViewController {
         super.viewDidAppear(animated)
         do {
             try self.captureSession.start()
+            self.startRenderTask()
         } catch {
             self.showError(error)
         }
     }
     
-    private func setupMetal() {
-        guard let mtlDevice = MTLCreateSystemDefaultDevice() else {
-            NSLog("failed to create MTLDevice.")
-            return
-        }
-        self.commandQueue = mtlDevice.makeCommandQueue()
-        self.ciContext = CIContext(mtlDevice: mtlDevice)
-        self.mtkView.device = mtlDevice
-        self.mtkView.framebufferOnly = false
-        self.mtkView.delegate = self
+    private func startRenderTask() {
         Task {
             for await sampleBuffer in self.captureSession.sampleBufferStream {
                 guard let imageBuffer = sampleBuffer.imageBuffer else {
@@ -56,8 +44,8 @@ final class ViewController: UIViewController {
                 } catch {
                     NSLog(error.localizedDescription)
                 }
-                self.renderImage = maskedImage ?? originImage
-                self.mtkView.draw()
+                self.mtlImageView.renderImage = maskedImage ?? originImage
+                self.mtlImageView.draw()
             }
         }
     }
@@ -85,35 +73,5 @@ final class ViewController: UIViewController {
         filter.inputImage = originImage
         filter.maskImage = fixedMaskImage
         return filter.outputImage
-    }
-}
-
-// MARK: - MTKViewDelegate
-
-extension ViewController: MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
-    
-    func draw(in view: MTKView) {
-        guard let renderImage = self.renderImage,
-              let ciContext = self.ciContext,
-              let commandBuffer = self.commandQueue?.makeCommandBuffer(),
-              let currentDrawable = view.currentDrawable else {
-            return
-        }
-        let fitTransform = CGAffineTransform(
-            scaleX: view.drawableSize.width / renderImage.extent.width,
-            y: view.drawableSize.height / renderImage.extent.height
-        )
-        let newImage = renderImage.transformed(by: fitTransform)
-        ciContext.render(
-            newImage,
-            to: currentDrawable.texture,
-            commandBuffer: commandBuffer,
-            bounds: newImage.extent,
-            colorSpace: CGColorSpaceCreateDeviceRGB()
-        )
-
-        commandBuffer.present(currentDrawable)
-        commandBuffer.commit()
     }
 }

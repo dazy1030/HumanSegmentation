@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		433EA61E27F5A65700D45C92 /* HumanSegmentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */; };
+		433EA62027F7607700D45C92 /* MetalCIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433EA61F27F7607700D45C92 /* MetalCIImageView.swift */; };
 		434DDF0427F42CB700F443CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434DDF0327F42CB700F443CB /* AppDelegate.swift */; };
 		434DDF0827F42CB700F443CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434DDF0727F42CB700F443CB /* ViewController.swift */; };
 		434DDF0B27F42CB700F443CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 434DDF0927F42CB700F443CB /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanSegmentation.swift; sourceTree = "<group>"; };
+		433EA61F27F7607700D45C92 /* MetalCIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCIImageView.swift; sourceTree = "<group>"; };
 		434DDF0027F42CB700F443CB /* HumanSegmentation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HumanSegmentation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		434DDF0327F42CB700F443CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		434DDF0727F42CB700F443CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				434DDF0327F42CB700F443CB /* AppDelegate.swift */,
 				434DDF0727F42CB700F443CB /* ViewController.swift */,
+				433EA61F27F7607700D45C92 /* MetalCIImageView.swift */,
 				434DDF1727F433C900F443CB /* CaptureSession.swift */,
 				433EA61D27F5A65700D45C92 /* HumanSegmentation.swift */,
 				434DDF0927F42CB700F443CB /* Main.storyboard */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				433EA62027F7607700D45C92 /* MetalCIImageView.swift in Sources */,
 				434DDF0827F42CB700F443CB /* ViewController.swift in Sources */,
 				433EA61E27F5A65700D45C92 /* HumanSegmentation.swift in Sources */,
 				434DDF1827F433C900F443CB /* CaptureSession.swift in Sources */,

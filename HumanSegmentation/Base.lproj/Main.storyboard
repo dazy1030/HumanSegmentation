@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mtkView contentMode="scaleToFill" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" paused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8BB-EN-omI">
+                            <mtkView contentMode="scaleToFill" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" paused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8BB-EN-omI" customClass="MetalCIImageView" customModule="HumanSegmentation" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                             </mtkView>
                         </subviews>
@@ -30,7 +30,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="mtkView" destination="8BB-EN-omI" id="h1S-fu-nsN"/>
+                        <outlet property="mtlImageView" destination="8BB-EN-omI" id="h1S-fu-nsN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
