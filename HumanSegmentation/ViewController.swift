@@ -20,13 +20,13 @@ final class ViewController: UIViewController {
     private var ciContext: CIContext?
     private var originCaptureImage: CIImage?
     private var maskImage: CIImage?
-    private let videoCapture = VideoCapture()
+    private let captureSession = CaptureSession()
     private let humanSegmentation = HumanSegmentation()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         do {
-            try self.videoCapture.start()
+            try self.captureSession.start()
         } catch {
             self.showError(error)
         }
@@ -43,7 +43,7 @@ final class ViewController: UIViewController {
         self.mtkView.framebufferOnly = false
         self.mtkView.delegate = self
         Task {
-            for await sampleBuffer in self.videoCapture.sampleBufferStream {
+            for await sampleBuffer in self.captureSession.sampleBufferStream {
                 guard let imageBuffer = sampleBuffer.imageBuffer else {
                     return
                 }

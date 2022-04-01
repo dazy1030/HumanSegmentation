@@ -1,5 +1,5 @@
 //
-//  VideoCapture.swift
+//  CaptureSession.swift
 //  HumanSegmentation
 //
 //  Created by Naoki Odajima on 2022/03/30.
@@ -8,7 +8,7 @@
 import AVFoundation
 import Combine
 
-final class VideoCapture: NSObject {
+final class CaptureSession: NSObject {
     private var captureSession: AVCaptureSession?
     private let sampleBufferPipe = PassthroughSubject<CMSampleBuffer, Never>()
     
@@ -44,7 +44,7 @@ final class VideoCapture: NSObject {
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 
-extension VideoCapture: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension CaptureSession: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
@@ -54,9 +54,9 @@ extension VideoCapture: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 }
 
-// MARK: - VideoCapture.Error
+// MARK: - CaptureSession.Error
 
-extension VideoCapture {
+extension CaptureSession {
     enum Error: LocalizedError {
         case noCaptureDevice
         case makeInputError(Swift.Error)
