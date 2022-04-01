@@ -18,8 +18,7 @@ final class ViewController: UIViewController {
     }
     private var commandQueue: MTLCommandQueue?
     private var ciContext: CIContext?
-    private var originCaptureImage: CIImage?
-    private var maskImage: CIImage?
+    private var renderImage: CIImage?
     private let captureSession = CaptureSession()
     private let humanSegmentation = HumanSegmentation()
     
@@ -47,15 +46,17 @@ final class ViewController: UIViewController {
                 guard let imageBuffer = sampleBuffer.imageBuffer else {
                     return
                 }
-                self.originCaptureImage = CIImage(cvImageBuffer: imageBuffer)
+                let originImage = CIImage(cvImageBuffer: imageBuffer)
+                var maskedImage: CIImage?
                 do {
-                    guard let maskImageBuffer = try self.humanSegmentation.makeMaskPixelBuffer(of: imageBuffer) else {
-                        return
+                    if let maskImageBuffer = try self.humanSegmentation.makeMaskPixelBuffer(of: imageBuffer) {
+                        let maskImage = CIImage(cvImageBuffer: maskImageBuffer)
+                        maskedImage = self.mask(to: originImage, with: maskImage)
                     }
-                    self.maskImage = CIImage(cvImageBuffer: maskImageBuffer)
                 } catch {
                     NSLog(error.localizedDescription)
                 }
+                self.renderImage = maskedImage ?? originImage
                 self.mtkView.draw()
             }
         }
@@ -93,14 +94,11 @@ extension ViewController: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
     
     func draw(in view: MTKView) {
-        guard var renderImage = self.originCaptureImage,
+        guard let renderImage = self.renderImage,
               let ciContext = self.ciContext,
               let commandBuffer = self.commandQueue?.makeCommandBuffer(),
               let currentDrawable = view.currentDrawable else {
             return
-        }
-        if let maskImage = self.maskImage, let maskedImage = self.mask(to: renderImage, with: maskImage) {
-            renderImage = maskedImage
         }
         let fitTransform = CGAffineTransform(
             scaleX: view.drawableSize.width / renderImage.extent.width,
